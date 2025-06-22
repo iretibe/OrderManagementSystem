@@ -9,57 +9,95 @@ A modular and testable .NET 8 Web API that simulates a real-world Order Manageme
 - Unit & Integration tests
 
 OrderManagementSystem/
-│
-├── 📁 src/
-│   ├── 📁 OrderManagementSystem.API/            # Couche API (endpoints, startup)
-│   │   ├── Program.cs
-│   │   ├── appsettings.json
-│   │   ├── Controllers/
-│   │
-│   │
-│   ├── 📁 OrderManagementSystem.Application/    # Couche Application (CQRS, Services, DTOs)
-│   │   ├── 📁 Orders/
-│   │   │   ├── CreateOrder/
-│   │   │   │   ├── CreateOrderCommand.cs
-│   │   │   │   ├── CreateOrderHandler.cs
-│   │   │   │   └── CreateOrderValidator.cs
-│   │   │   ├── UpdateStatus/
-│   │   │   ├── GetAnalytics/
-│   │   │   └── Discounts/
-│   │   │       ├── IDiscountService.cs
-│   │   │       └── DiscountService.cs
-│   │   └── Common/
-│   │       ├── Interfaces/
-│   │       ├── Exceptions/
-│   │       └── Behaviors/                      # Pipeline (logging, validation, etc.)
-│   │
-│   ├── 📁 OrderManagementSystem.Domain/         # Couche métier (entités, enums, logiques)
-│   │   ├── Entities/
-│   │   │   ├── Order.cs
-│   │   │   └── Customer.cs
-│   │   └── Enums/OrderStatus.cs
-│   │
-│   ├── 📁 OrderManagementSystem.Infrastructure/ # Accès DB, services externes, EF Core
-│   │   ├── Data/
-│   │   │   ├── ApplicationDbContext.cs
-│   │   │   └── SeedData.cs
-│   │   └── Persistence/
-│   │       └── Repositories/
-│   │
-│   └── 📁 OrderManagementSystem.Tests/          # xUnit Tests (par slice)
-│       ├── CreateOrderTests.cs
-│       ├── DiscountServiceTests.cs
-│       └── AnalyticsEndpointTests.cs
-│
-├── 📄 OrderManagementSystem.sln
-└── 📄 README.md
+└── src/
+    ├── OrderManagementSystem.API/
+    │   ├── Controllers/
+    │   │   ├── CustomersController.cs
+    │   │   └── OrdersController.cs
+    │   ├── appsettings.json
+    │   └── Program.cs
+    │
+    ├── OrderManagementSystem.Application/
+    │   ├── Commands/
+    │   │   ├── ApplyDiscountCommand.cs
+    │   │   ├── CreateCustomerCommand.cs
+    │   │   ├── CreateOrderCommand.cs
+    │   │   ├── DeleteCustomerCommand.cs
+    │   │   ├── UpdateCustomerCommand.cs
+    │   │   ├── UpdateOrderCommand.cs
+    │   │   └── UpdateOrderStatusCommand.cs
+    │   ├── Handlers/
+    │   │   ├── ApplyDiscountCommandHandler.cs
+    │   │   ├── CreateCustomerCommandHandler.cs
+    │   │   ├── CreateOrderCommandHandler.cs
+    │   │   ├── DeleteCustomerCommandHandler.cs
+    │   │   ├── UpdateCustomerCommandHandler.cs
+    │   │   ├── UpdateOrderCommandHandler.cs
+    │   │   └── UpdateOrderStatusCommandHandler.cs
+    │   ├── Queries/
+    │   │   ├── GetAllCustomersQuery.cs
+    │   │   ├── GetCustomerByIdQuery.cs
+    │   │   ├── GetOrderAnalyticsQuery.cs
+    │   │   └── GetOrderByIdQuery.cs
+    │   ├── Handlers/
+    │   │   ├── GetAllCustomersQueryHandler.cs
+    │   │   ├── GetCustomerByIdQueryHandler.cs
+    │   │   ├── GetOrderAnalyticsQueryHandler.cs
+    │   │   └── GetOrderByIdQueryHandler.cs
+    │   └── Exceptions/
+    │       ├── AppException.cs
+    │       ├── CustomerNotFoundException.cs
+    │       └── OrderNotFoundException.cs
+    │
+    ├── OrderManagementSystem.Domain/
+    │   ├── DTOs/
+    │   │   └── OrderAnalyticsDto.cs
+    │   ├── Entities/
+    │   │   ├── BaseEntity.cs
+    │   │   ├── Customer.cs
+    │   │   ├── Order.cs
+    │   │   └── OrderItem.cs
+    │   ├── Enums/
+    │   │   └── OrderStatus.cs
+    │   └── Repositories/
+    │       ├── ICustomerRepository.cs
+    │       ├── IDiscountRepository.cs
+    │       ├── IOrderAnalyticsRepository.cs
+    │       └── IOrderRepository.cs
+    │
+    ├── OrderManagementSystem.Infrastructure/
+    │   ├── Configurations/
+    │   │   ├── CustomerConfiguration.cs
+    │   │   ├── OrderConfiguration.cs
+    │   │   └── OrderItemConfiguration.cs
+    │   ├── Data/
+    │   │   ├── OrderDbContext.cs
+    │   │   └── OrderDbContextFactory.cs
+    │   ├── Migrations/
+    │   │   └── ... (auto-generated)
+    │   └── Repositories/
+    │       ├── CustomerRepository.cs
+    │       ├── DiscountRepository.cs
+    │       ├── OrderAnalyticsRepository.cs
+    │       └── OrderRepository.cs
+    │
+    └── OrderManagementSystem.Tests/
+        ├── AnalyticsEndpointTests.cs
+        ├── ApplyDiscountCommandHandlerTests.cs
+        ├── CreateCustomerCommandHandlerTests.cs
+        ├── CreateOrderCommandHandlerTests.cs
+        ├── DeleteCustomerCommandHandlerTests.cs
+        ├── GetAllCustomersQueryHandlerTests.cs
+        ├── GetCustomerByIdQueryHandlerTests.cs
+        ├── GetOrderAnalyticsQueryHandlerTests.cs
+        ├── UpdateCustomerCommandHandlerTests.cs
+        └── UpdateOrderStatusCommandHandlerTests.cs
 
-Technologies Used:
-
-.NET 8 Web API
-Entity Framework Core
-MediatR
-Moq
-xUnit
-FluentValidation (if used)
-Swagger / Swashbuckle
+*Technologies Used:*
+- .NET 8 Web API
+- Entity Framework Core
+- MediatR
+- Moq
+- xUnit
+- FluentValidation (if used)
+- Swagger / Swashbuckle
